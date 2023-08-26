@@ -14,11 +14,15 @@ func main() {
 		return
 	}
 
+	fmt.Println("Available Client Files")
+
 	for _, e := range files {
 		fmt.Println(e)
 	}
 
 	http.HandleFunc("/", root)
+
+	fmt.Println("Starting Server on port 3000...")
 	http.ListenAndServe(":3000", nil)
 }
 
