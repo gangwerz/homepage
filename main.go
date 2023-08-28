@@ -1,33 +1,53 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"net/http"
+	"log/slog"
 )
 
-func main() {
-	files, err := os.ReadDir("client")
-
-	if err != nil {
-		fmt.Println(err)
-		return
+func check(e error) {
+	if e != nil {
+		panic(e)
 	}
+}
 
-	fmt.Println("Available Client Files")
+func main() {
+	logger := setLogLevel()
+	check(err)
+
+	files, err := os.ReadDir("client")
+	check(err)
 
 	for _, e := range files {
-		fmt.Println(e)
+		slog.Debug("Client File: %s", e.Name())
 	}
 
 	http.HandleFunc("/", root)
 
-	fmt.Println("Starting Server on port 3000...")
+	slog.Info("Starting Server on Port 3000...")
 	http.ListenAndServe(":3000", nil)
 }
 
+func setLogLevel() *slog.Logger {
+	lvl, lvl_found := os.LookupEnv("LOG_LEVEL")
+	logger := new(slog.LevelVar)
+
+	if lvl_found {
+		switch lvl {
+			case "DEBUG": logger.Set(slog.LevelDebug)
+			case "WARN": logger.Set(slog.LevelWarn)
+			
+			case "ERROR": logger.Set(slog.LevelError)
+		}
+	}
+
+	return logger
+}
+// --- HANDLERS ---
+
 func root(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("-- ROOT --")
+	slog.Debug("Route Hit:  ROOT")
 
 	http.ServeFile(w, r, "client/index.html")
 }
