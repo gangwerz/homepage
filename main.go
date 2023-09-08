@@ -1,27 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+    "fmt"
+    "net/http"
+    "log"
+
+    "github.com/julienschmidt/httprouter"
 )
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
+func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+    fmt.Fprint(w, "Welcome!\n")
+}
+
+func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+    fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
 }
 
 func main() {
-	http.HandleFunc("/", root)
+    router := httprouter.New()
+    router.GET("/", Index)
+    router.GET("/hello/:name", Hello)
 
-	fmt.Println("Started Server on Port 3000")
-	http.ListenAndServe(":3000", nil)
+    log.Fatal(http.ListenAndServe(":3000", router))
 }
 
-// --- HANDLERS ---
-
-func root(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Route Hit:  ROOT")
-
-	http.ServeFile(w, r, "client/index.html")
-}
