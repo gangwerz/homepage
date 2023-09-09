@@ -2,8 +2,13 @@
 <html>
 	<head>
 		<script src="https://unpkg.com/htmx.org@1.9.5"></script>
+		<link rel="stylesheet" href="/static/style.css" type="text/css">
 	</head>
-	<body>
-		<h1>ZACH</h1>
-	</body>
+	<header>
+		<h1>Zach Gangwer</h1>
+		<ul>
+			<li>LinkedIn</li>
+		</ul>
+	</header>
+	<div hx-get="/home" hx-trigger="load" hx-swap="outerHTML">LOADING</div>
 </html>
