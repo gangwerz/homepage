@@ -4,11 +4,37 @@
 		<script src="https://unpkg.com/htmx.org@1.9.5"></script>
 		<link rel="stylesheet" href="/static/style.css" type="text/css">
 	</head>
-	<header>
-		<h1>Zach Gangwer</h1>
-		<ul>
-			<li>LinkedIn</li>
-		</ul>
-	</header>
-	<div hx-get="/home" hx-trigger="load" hx-swap="outerHTML">LOADING</div>
+
+	<body>
+		<header>
+			<h1>Zach Gangwer</h1>
+			<ul>
+				<li>LinkedIn</li>
+			</ul>
+		</header>
+
+		<nav>
+			<button
+				hx-get="/home"
+				hx-target="main"
+				placeholder="Loading..."
+			>
+				Home
+			</button>
+			<button
+				hx-get="/about"
+				hx-target="main"
+				placeholder="Loading..."
+			>
+				About
+			</button>
+		</nav>
+
+		<main
+			hx-get="/home"
+			hx-trigger="load"
+		></main>
+
+		<footer>fin</footer>
+	</body>
 </html>

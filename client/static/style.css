@@ -1,7 +1,25 @@
 html {
-	background-color: black;
+	background-color: #2E3440;
+	color: #ECEFF4;
+	text-align: center;
 }
 
-h1 {
-	color: red;
+header {
+	font-size: 2rem;
+}
+
+header h1 {
+	font-size: 4em;
+	margin: 0;
+	color: #8FBCBB;
+}
+
+main {
+	margin: 2em auto;
+	max-width: 80em;
+	background-color: #4C566A
+}
+
+main h1 {
+	font-size: 4em;
 }
